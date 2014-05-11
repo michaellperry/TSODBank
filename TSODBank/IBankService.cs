@@ -22,7 +22,7 @@ namespace TSODBank
     public class Confirmation
     {
         [DataMember]
-        public string Identifier { get; set; }
+        public int Identifier { get; set; }
 
         [DataMember]
         public int Account { get; set; }

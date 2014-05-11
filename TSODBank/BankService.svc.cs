@@ -10,18 +10,37 @@ namespace TSODBank
 {
     public class BankService : IBankService
     {
+        private static Dictionary<int, AccountStatus> _accounts = new Dictionary<int, AccountStatus>
+        {
+            { 1, new AccountStatus { Balance = 3000.0m }},
+            { 2, new AccountStatus { Balance = 2000.0m }},
+            { 3, new AccountStatus { Balance = 5000.0m }},
+            { 4, new AccountStatus { Balance = 4000.0m }},
+            { 5, new AccountStatus { Balance = 1000.0m }}
+        };
+
+        private static int _nextConfirmationNumber = 1000;
+        
         public decimal GetBalance(int account)
         {
-            return 3000.0m;
+            return _accounts[account].Balance;
         }
 
         public Confirmation Withdraw(int account, decimal amount)
         {
+            var accountStatus = _accounts[account];
+
+            if (accountStatus.Balance < amount)
+                throw new InvalidOperationException(
+                    "Insufficient funds");
+
+            accountStatus.Balance -= amount;
+
             return new Confirmation
             {
-                Identifier = "234",
+                Identifier = _nextConfirmationNumber++,
                 Account = account,
-                NewBalance = 3000.0m - amount
+                NewBalance = accountStatus.Balance
             };
         }
     }
