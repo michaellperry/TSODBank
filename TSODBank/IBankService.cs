@@ -15,17 +15,20 @@ namespace TSODBank
         decimal GetBalance(int account);
 
         [OperationContract]
-        Confirmation Withdraw(int account, decimal amount);
+        Withdrawl PrepareWithdrawl(int account, decimal amount);
     }
 
     [DataContract]
-    public class Confirmation
+    public class Withdrawl
     {
         [DataMember]
-        public int Identifier { get; set; }
+        public int ConfirmationNumber { get; set; }
 
         [DataMember]
         public int Account { get; set; }
+
+        [DataMember]
+        public decimal Amount { get; set; }
 
         [DataMember]
         public decimal NewBalance { get; set; }

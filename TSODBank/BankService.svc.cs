@@ -26,7 +26,7 @@ namespace TSODBank
             return _accounts[account].Balance;
         }
 
-        public Confirmation Withdraw(int account, decimal amount)
+        public Withdrawl PrepareWithdrawl(int account, decimal amount)
         {
             var accountStatus = _accounts[account];
 
@@ -34,13 +34,12 @@ namespace TSODBank
                 throw new InvalidOperationException(
                     "Insufficient funds");
 
-            accountStatus.Balance -= amount;
-
-            return new Confirmation
+            return new Withdrawl
             {
-                Identifier = _nextConfirmationNumber++,
+                ConfirmationNumber = _nextConfirmationNumber++,
                 Account = account,
-                NewBalance = accountStatus.Balance
+                Amount = amount,
+                NewBalance = accountStatus.Balance - amount
             };
         }
     }
