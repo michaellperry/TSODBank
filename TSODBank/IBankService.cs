@@ -16,6 +16,9 @@ namespace TSODBank
 
         [OperationContract]
         Withdrawl PrepareWithdrawl(int account, decimal amount);
+
+        [OperationContract]
+        void ExecuteWithdrawl(Withdrawl withdrawl);
     }
 
     [DataContract]

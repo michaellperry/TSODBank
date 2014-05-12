@@ -42,5 +42,16 @@ namespace TSODBank
                 NewBalance = accountStatus.Balance - amount
             };
         }
+
+        public void ExecuteWithdrawl(Withdrawl withdrawl)
+        {
+            AccountStatus accountStatus = _accounts[withdrawl.Account];
+
+            if (accountStatus.Transactions.Contains(withdrawl.ConfirmationNumber))
+                return;
+
+            accountStatus.Balance -= withdrawl.Amount;
+            accountStatus.Transactions.Add(withdrawl.ConfirmationNumber);
+        }
     }
 }
